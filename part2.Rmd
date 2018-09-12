@@ -1,0 +1,18 @@
+
+RNAseq analysis methods
+Part 2
+1.	Open R (I use R studio, you can also use the command line) 
+2.	Install edgeR. 
+
+
+```{r}
+source("http://bioconductor.org/biocLite.R")
+biocLite("edgeR")
+```
+
+3.	Load the edgeR package. We will use edgeR to identify significantly differentially expressed genes between our two groups based on counts of gene expression for each gene. 
+
+```{r}
+library(edgeR)
+```
+
