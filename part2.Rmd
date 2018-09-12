@@ -40,8 +40,8 @@ dim(counts)
 Create map of samples to treatments 
 ```{r}
 samples = colnames(counts)
-design = c(rep("A", 10),rep("B",10))
-sample.info = data.frame(cbind(samples,design))
+group = c(rep("A", 10),rep("B",10))
+sample.info = data.frame(cbind(samples,group))
 head(sample.info)
 ```
 
@@ -60,7 +60,7 @@ dim(gene.counts)
 
 Create a DGEList of the data
 ```{r}
-y <- DGEList(counts=gene.counts,group=sample.info$design)
+y <- DGEList(counts=gene.counts,group=sample.info$group)
 
 ```
 
@@ -76,8 +76,35 @@ y
 
 Visualize the data in y, for example using an MDS plot
 ```{r}
-mds(y)
+plotMDS(y)
 ```
 
+Design matrix
+```{r}
+design <- model.matrix(~group)
+design
+```
 
+Estimate dispersion 
+```{r}
+y <- estimateDisp(y,design)
+```
 
+perform quasi-likelihood F-tests:
+```{r}
+fit <- glmQLFit(y,design)
+qlf <- glmQLFTest(fit,coef=2)
+topTags(qlf)
+```
+
+summarize the results
+```{r}
+summary(de <- decideTestsDGE(qlf, p.value = 0.05))
+```
+
+plot the results
+```{r}
+detags <- rownames(y)[as.logical(de)]
+plotSmear(qlf, de.tags=detags)
+abline(h = c(-1, 1), col = "blue")
+```
