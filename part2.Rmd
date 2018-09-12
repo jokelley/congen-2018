@@ -2,8 +2,9 @@
 RNAseq analysis methods
 Part 2
 
-1.	Open R (I use R studio, you can also use the command line) 
-2.	Install edgeR. 
+Open R (I use R studio, you can also use the command line) 
+
+Install edgeR. 
 
 ```{r}
 source("http://bioconductor.org/biocLite.R")
