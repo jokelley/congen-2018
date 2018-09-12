@@ -16,28 +16,28 @@ biocLite("edgeR")
 library(edgeR)
 ```
 
-# Set working directory
+Set working directory
 ```{r}
 setwd("/Users/jlkelley/Dropbox/ConGen2018")
 ```
 
-# Read in gene count matrix 
+Read in gene count matrix 
 ```{r}
 counts = read.csv("gene_count_matrix.csv", header = T, row = 1)
 ```
 
-# Look at the beginning of the file (note, there are lots of zeros)
+Look at the beginning of the file (note, there are lots of zeros)
 ```{r}
 head(counts)
 ```
 
-# Make sure the number of genes and samples is expected
+Make sure the number of genes and samples is expected
 ```{r}
 dim(counts)
 ```
 
 
-# Create map of samples to treatments 
+Create map of samples to treatments 
 ```{r}
 samples = colnames(counts)
 design = c(rep("A", 10),rep("B",10))
@@ -45,33 +45,39 @@ sample.info = data.frame(cbind(samples,design))
 head(sample.info)
 ```
 
-# Remove genes with zero counts
+Remove genes with zero counts
 
 ```{r}
 length(which(rowSums(counts) == 0))
 gene.counts = counts[rowSums(counts) != 0,]
 ```
 
-# Determine the number of genes left after removing zeros
+Determine the number of genes left after removing zeros
 ```{r}
 dim(gene.counts)
 ```
 
 
-# Create a DGEList of the data
+Create a DGEList of the data
 ```{r}
 y <- DGEList(counts=gene.counts,group=sample.info$design)
 
 ```
 
-# Calculate the normalization factors (from the edgeR manual: The calcNormFactors function normalizes for RNA composition by finding a set of scaling factors for the library sizes that minimize the log-fold changes between the samples for most genes. The default method for computing these scale factors uses a trimmed mean of M-values (TMM) between each pair of samples [30]. We call the product of the original library size and the scaling factor the effective lib)
+Calculate the normalization factors (from the edgeR manual: The calcNormFactors function normalizes for RNA composition by finding a set of scaling factors for the library sizes that minimize the log-fold changes between the samples for most genes. The default method for computing these scale factors uses a trimmed mean of M-values (TMM) between each pair of samples [30]. We call the product of the original library size and the scaling factor the effective lib)
 ```{r}
 y <- calcNormFactors(y)
 ```
 
-# Look at y
+Look at y
 ```{r}
 y
 ```
+
+Visualize the data in y, for example using an MDS plot
+```{r}
+mds(y)
+```
+
 
 
