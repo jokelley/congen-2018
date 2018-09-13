@@ -8,3 +8,5 @@ Our recently published paper with RNAseq and SNPs called from RNAseq data (And a
 Genome Biology and Evolution
 
 
+The paper I mentioned about different RNA preservation methods (be sure to check out the comments below) [RNAlater and flash freezing storage methods nonrandomly influence observed gene expression in RNAseq experiments](https://www.biorxiv.org/content/early/2018/07/29/379834)
+
